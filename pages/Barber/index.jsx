@@ -25,6 +25,7 @@ import { Link } from "@react-navigation/native";
 import { getBarber, me } from "../../utils/redux/actions";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { base_url } from "../../utils/helper";
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 
@@ -82,7 +83,7 @@ function Barber({ navigation }) {
   };
 
   const handleBooking = () => {
-    props.navigation.navigate("Detail");
+    navigation.navigate("Detail");
     setModalVisible(false);
   };
 
@@ -120,7 +121,7 @@ function Barber({ navigation }) {
                 },
               ]}
             >
-              <Pressable onPress={() => props.navigation.navigate("Dashboard")}>
+              <Pressable onPress={() => navigation.navigate("Dashboard")}>
                 <Ionicons name="arrow-back" size={30} color="black" />
               </Pressable>
               <Text style={[styles.heading, { color: "white" }]}>Barber</Text>
@@ -175,7 +176,7 @@ function Barber({ navigation }) {
                             style={{ width: 70, height: 70, borderRadius: 10 }}
                             source={{
                               uri:
-                                "http://192.168.1.11:8000/images/" + e.profile,
+                                base_url+ "/images/" + e.profile,
                             }}
                           />
                         </View>

@@ -17,7 +17,7 @@ import {
 } from "react-native";
 import DateTime from "@react-native-community/datetimepicker";
 import MapView from "react-native-maps";
-import { Ionicons, Feather, Fontisto } from "@expo/vector-icons";
+import { Ionicons, Feather, Fontisto, MaterialIcons } from "@expo/vector-icons";
 import CardLayanan from "../../component/CardLayanan";
 import * as Location from "expo-location";
 import { Link } from "@react-navigation/native";
@@ -37,6 +37,7 @@ function Dashboard({ navigation }) {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.mainReducer.user);
+  const profile = useSelector((state) => state.mainReducer.profile);
 
   const [isTanggal, setTgl] = useState(false);
   const [isJam, setJm] = useState(false);
@@ -104,11 +105,13 @@ function Dashboard({ navigation }) {
               {
                 width: "100%",
                 minHeight: 100,
-                backgroundColor: "pink",
+                backgroundColor: "#E1FFB1",
                 borderBottomStartRadius: 15,
                 borderBottomEndRadius: 15,
+                marginBottom: 10
               },
               styles.colCenter,
+              styles.shadow
             ]}
           >
             <View
@@ -122,7 +125,7 @@ function Dashboard({ navigation }) {
                 },
               ]}
             >
-              <Text style={[styles.heading, { color: "white" }]}>BARON</Text>
+              <Text style={[styles.heading, { color: "black" }]}>BARON</Text>
               <Ionicons name="person-circle" size={32} color="black" />
             </View>
           </View>
@@ -145,6 +148,9 @@ function Dashboard({ navigation }) {
               <Text style={{ color: "black" }}>Halo, Selamat Datang</Text>
               <Text style={[styles.heading, { color: "black" }]}>
                 {user?.name}
+              </Text>
+              <Text style={[styles.heading, { color: "gray", fontSize: 14 }]}>
+                {profile?.nama_barber}
               </Text>
             </View>
             <View>
@@ -188,7 +194,7 @@ function Dashboard({ navigation }) {
                         alignItems: "center",
                       }}
                     >
-                      <Fontisto name="scissors" size={28} color="black" />
+                      <Fontisto name="history" size={28} color="white" />
                     </View>
                     <View
                       style={[
@@ -197,7 +203,7 @@ function Dashboard({ navigation }) {
                       ]}
                     >
                       <Text style={[styles.heading, { fontSize: 18 }]}>
-                        Lihat Barber Tersedia
+                        Lihat Transaksi Saya
                       </Text>
                     </View>
                   </View>
@@ -257,7 +263,7 @@ function Dashboard({ navigation }) {
                         alignItems: "center",
                       }}
                     >
-                      <Fontisto name="history" size={28} color="white" />
+                      <Fontisto name="scissors" size={28} color="white" />
                     </View>
                     <View
                       style={[
@@ -266,18 +272,87 @@ function Dashboard({ navigation }) {
                       ]}
                     >
                       <Text style={[styles.heading, { fontSize: 18 }]}>
-                        Lihat Riwayat Transaksi
+                        Lihat Servis
                       </Text>
                     </View>
                   </View>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate("Barber")}
+                    onPress={() => navigation.navigate("Servis")}
                     style={[
                       styles.rowCenter,
                       {
                         height: 70,
                         width: 70,
                         backgroundColor: "#6fffa9",
+                        borderRadius: 10,
+                      },
+                    ]}
+                  >
+                    <Feather name="arrow-right" size={50} color="white" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View
+                style={[
+                  {
+                    width: "100%",
+                    borderRadius: 20,
+                    height: 100,
+                    backgroundColor: "white",
+                    marginTop: 15,
+                  },
+                  styles.shadow,
+                ]}
+              >
+                <View
+                  style={[
+                    {
+                      height: "100%",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: 15,
+                    },
+                  ]}
+                >
+                  <View
+                    style={{
+                      height: "100%",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        height: 70,
+                        width: 70,
+                        backgroundColor: "#B6E388",
+                        justifyContent: "center",
+                        borderRadius: 10,
+                        alignItems: "center",
+                      }}
+                    >
+                      <MaterialIcons name="payment" size={28} color="white" />
+                    </View>
+                    <View
+                      style={[
+                        styles.colCenter,
+                        { marginLeft: 10, maxWidth: "60%" },
+                      ]}
+                    >
+                      <Text style={[styles.heading, { fontSize: 18 }]}>
+                        Lihat Metode Pembayaran
+                      </Text>
+                    </View>
+                  </View>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("MetodePembayaran")}
+                    style={[
+                      styles.rowCenter,
+                      {
+                        height: 70,
+                        width: 70,
+                        backgroundColor: "#B6E388",
                         borderRadius: 10,
                       },
                     ]}

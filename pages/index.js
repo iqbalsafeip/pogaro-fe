@@ -3,8 +3,10 @@ import Dashboard from "./Dashboard";
 import Detail from "./Detail";
 import Home from "./Home";
 import Login from "./Login";
+import MetodePembayaran from "./MetodePembayaran";
 import Register from "./Register";
 import Reviews from "./Reviews";
+import Servis from "./Servis";
 
 export const authPages = [
   {
@@ -37,6 +39,14 @@ const pages = [
   {
     name: "Barber",
     component: Barber,
+  },
+  {
+    name: "Servis",
+    component: Servis,
+  },
+  {
+    name: "MetodePembayaran",
+    component: MetodePembayaran,
   },
 ];
 

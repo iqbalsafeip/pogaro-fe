@@ -27,8 +27,10 @@ const Head = () => {
   const [isLoading, setLoading] = useState(true);
   const data = useSelector((state) => state.mainReducer.isLogin);
   useEffect(() => {
+    setLoading(true)
     dispatch(me());
-  }, [isLogin]);
+    setLoading(false)
+  }, []);
 
   return isLoading ? (
     <Text>Loading...</Text>

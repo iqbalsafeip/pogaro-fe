@@ -14,15 +14,18 @@ const Register = ({ navigation }) => {
     password: false,
     email: false,
     username: false,
+    nama_barber: false
   });
 
   const [passwordMessage, setPasswordMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
   const [usernameMessage, setUsernameMessage] = useState("");
+  const [names, setnames] = useState("");
   const [input, setInput] = useState({
     email: "",
     username: "",
     password: "",
+    nama_barber: ""
   });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -98,7 +101,8 @@ const Register = ({ navigation }) => {
           email: input.email,
           name: input.username,
           password: input.password,
-          role: "user",
+          nama_barber: input.nama_barber,
+          role: "barber",
         })
       )
     ).then((res) => {
@@ -130,8 +134,18 @@ const Register = ({ navigation }) => {
           onBlur={() => onBlur("username", false)}
           errorMessage={usernameMessage.length > 0 ? usernameMessage : ""}
           icon={usernameMessage.length > 0 ? CrossIcon : CorrectIcon}
-          label="Username"
-          placeholder="Username"
+          label="Nama"
+          placeholder="Nama"
+        ></FormInput>
+        <FormInput
+          value={input.nama_barber}
+          onChange={(value) => handleChange("nama_barber", value)}
+          onFocus={() => onFocus("nama_barber", true)}
+          onBlur={() => onBlur("nama_barber", false)}
+          errorMessage={names.length > 0 ? names : ""}
+          icon={names.length > 0 ? CrossIcon : CorrectIcon}
+          label="Nama Barber"
+          placeholder="Nama Barber"
         ></FormInput>
         <FormInput
           value={input.password}

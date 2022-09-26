@@ -6,3 +6,5 @@ export const toFormData = (data) => {
 
   return fd;
 };
+
+export const base_url = "http://192.168.2.156:8000"
