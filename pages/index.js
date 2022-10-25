@@ -2,8 +2,10 @@ import Barber from "./Barber";
 import Dashboard from "./Dashboard";
 import Detail from "./Detail";
 import Home from "./Home";
+import Katalog from "./Katalog";
 import Login from "./Login";
 import MetodePembayaran from "./MetodePembayaran";
+import Profile from "./Profile";
 import Register from "./Register";
 import Reviews from "./Reviews";
 import Servis from "./Servis";
@@ -48,6 +50,14 @@ const pages = [
     name: "MetodePembayaran",
     component: MetodePembayaran,
   },
+  {
+    name : "Profile",
+    component: Profile
+  },
+  {
+    name: "Katalog",
+    component: Katalog
+  }
 ];
 
 export default pages;

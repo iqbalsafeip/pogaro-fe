@@ -22,15 +22,16 @@ import { Ionicons, AntDesign, Fontisto, MaterialIcons, EvilIcons } from "@expo/v
 import CardLayanan from "../../component/CardLayanan";
 import * as Location from "expo-location";
 import { Link } from "@react-navigation/native";
-import { deleteServis, getBarber, getServisId, me, tambahServis } from "../../utils/redux/actions";
+import { deleteServis, getBarber, getKatalogId, getServisId, me, tambahKatalog, tambahServis } from "../../utils/redux/actions";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { base_url, toFormData } from "../../utils/helper";
 import { FormInput } from "../../component";
+import * as DocumentPicker from 'expo-document-picker';
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 
-function Servis({ navigation }) {
+function Katalog({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
@@ -41,22 +42,46 @@ function Servis({ navigation }) {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isLoading, setLoading] = useState(false);
-  
+
   const [form, setForm] = useState({
-    harga_servis: "",
-    nama_servis: ""
+    dokumen: "",
+    nama_katalog: ""
   })
- 
+
   useEffect(() => {
-    dispatch(getServisId(profile.id)).then((res) => {
+    dispatch(getKatalogId(profile.id)).then((res) => {
       setData(res.data.data);
     });
   }, []);
 
 
-  
+  const handleUpload = () => {
+    const temp = {
+      barber_id: profile.id,
+      nama_foto: form.nama_katalog,
+      dokumen: {
+        ...form.file,
+        type: form.file.mimeType
+      }
+    }
 
-  
+    dispatch(tambahKatalog(toFormData(temp)))
+      .then((res) => {
+        dispatch(getKatalogId(profile.id)).then((res) => {
+          setData(res.data.data);
+        });
+        alert("berhasil")
+        setModalVisible(false)
+      })
+      .catch((err) => {
+        alert(JSON.stringify(err))
+        setModalVisible(false)
+      })
+  }
+
+
+
+
 
   const handleTambahServis = () => {
     const data = {
@@ -67,7 +92,7 @@ function Servis({ navigation }) {
 
     dispatch(tambahServis(toFormData(data)))
       .then((res) => {
-        dispatch(getServisId(profile.id)).then((res) => {
+        dispatch(getKatalogId(profile.id)).then((res) => {
           setData(res.data.data);
         });
         setModalVisible(false)
@@ -89,6 +114,13 @@ function Servis({ navigation }) {
       .catch((err) => {
         setModalVisible(false)
       })
+  }
+
+  
+  const handleDokumen = async () => {
+    const doc = await DocumentPicker.getDocumentAsync();
+    alert(JSON.stringify(doc))
+    setForm(e => ({ ...form, file: doc }));
   }
 
   return (
@@ -126,7 +158,7 @@ function Servis({ navigation }) {
               <Pressable onPress={() => navigation.navigate("Dashboard")}>
                 <Ionicons name="arrow-back" size={30} color="white" />
               </Pressable>
-              <Text style={[styles.heading, { color: "white" }]}>Servis</Text>
+              <Text style={[styles.heading, { color: "white" }]}>Katalog</Text>
             </View>
           </View>
 
@@ -147,7 +179,7 @@ function Servis({ navigation }) {
                 styles.shadow
               ]}
             >
-              <Text style={{ color: "white", fontWeight: "bold", marginRight: 10 }} >Tambah Servis</Text>
+              <Text style={{ color: "white", fontWeight: "bold", marginRight: 10 }} >Tambah Katalog</Text>
               <AntDesign name="pluscircle" size={18} color="white" />
             </TouchableOpacity>
             {data.length > 0
@@ -192,7 +224,13 @@ function Servis({ navigation }) {
                           alignItems: "center",
                         }}
                       >
-                        <MaterialIcons name="home-repair-service" size={32} color="white" />
+                        <Image
+                            style={{ width: 70, height: 70, borderRadius: 10 }}
+                            source={{
+                              uri:
+                                base_url + "/katalog/" + e.file_katalog,
+                            }}
+                          />
                       </View>
                       <View
                         style={[
@@ -201,11 +239,9 @@ function Servis({ navigation }) {
                         ]}
                       >
                         <Text style={[styles.heading, { fontSize: 18 }]}>
-                          {e.nama_servis}
+                          {e.nama_foto}
                         </Text>
-                        <Text style={[styles.heading, { fontSize: 14 }]}>
-                          Rp. {e.harga_servis}
-                        </Text>
+                        
                       </View>
                     </View>
                     <TouchableOpacity
@@ -239,11 +275,30 @@ function Servis({ navigation }) {
           >
             <View style={styles.centeredView}>
               <View style={styles.modalView}>
-                <Text style={styles.heading}>Tambah Servis</Text>
-                <TextInput style={styles.input} value={form.nama_servis} onChangeText={e => setForm({...form, nama_servis: e})} placeholder="Nama Servis" />
-                <TextInput style={styles.input} value={form.harga_servis} onChangeText={e => setForm({...form, harga_servis: e})} placeholder="Harga Servis" />
+                <Text style={[styles.heading, { fontSize: 16 }]}>Upload Bukti Pembayaran</Text>
+                <View style={{ width: "100%", borderBottomWidth: 2, borderColor: "black", marginTop: 4 }} />
+                <Text style={[styles.heading, { fontSize: 12 }]}>{form.file?.name}</Text>
                 <TouchableOpacity
-                  onPress={handleTambahServis}
+                  onPress={handleDokumen}
+                  style={[
+                    styles.rowCenter,
+                    {
+                      height: 40,
+                      width: "100%",
+                      backgroundColor: "green",
+                      borderRadius: 10,
+                      marginTop: 10,
+                      marginBottom: 10
+                    },
+                    styles.shadow
+                  ]}
+                >
+                  <Text style={{ color: "white", fontWeight: "bold", marginRight: 10 }} >Pilih Dokumen</Text>
+                  <AntDesign name="pluscircle" size={18} color="white" />
+                </TouchableOpacity>
+                <TextInput style={styles.input} value={form.nama_katalog} onChangeText={e => setForm({...form, nama_katalog: e})} placeholder="Nama Katalog" />
+                <TouchableOpacity
+                  onPress={handleUpload}
                   style={[
                     styles.rowCenter,
                     {
@@ -256,11 +311,11 @@ function Servis({ navigation }) {
                     styles.shadow
                   ]}
                 >
-                  <Text style={{ color: "white", fontWeight: "bold", marginRight: 10 }} >Tambah Servis</Text>
+                  <Text style={{ color: "white", fontWeight: "bold", marginRight: 10 }} >Upload</Text>
                   <AntDesign name="pluscircle" size={18} color="white" />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={()=> setModalVisible(false)}
+                  onPress={() => setModalVisible(false)}
                   style={[
                     styles.rowCenter,
                     {
@@ -357,4 +412,4 @@ const styles = StyleSheet.create({
   input: { marginVertical: 4, backgroundColor: "white", width: "100%", borderRadius: 5, borderWidth: 2, borderColor: "gray", paddingHorizontal: 8 }
 });
 
-export default Servis;
+export default Katalog;

@@ -16,28 +16,13 @@ const AuthLayout = ({children, navigation, title, subTitle, otp}) => {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <View
-            style={{
-              backgroundColor: colors.greenPrimary,
-              height: 70,
-              width: 70,
-              borderRadius: 15,
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Image
-              resizeMode="contain"
-              source={Logo}
-              style={{tintColor: colors.whitePrimary}}></Image>
-          </View>
           <Text
             style={{
               marginLeft: 10,
               fontSize: 30,
               color: colors.greenPrimary,
             }}>
-            BARON
+            POGARO
           </Text>
         </View>
         <View

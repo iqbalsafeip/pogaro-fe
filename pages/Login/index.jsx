@@ -99,8 +99,6 @@ const Login = ({ navigation }) => {
   return (
     <AuthLayout
       navigation={navigation}
-      title="Selamat Datang Barbers"
-      subTitle="Login untuk mengakses"
     >
       <View>
         <FormInput

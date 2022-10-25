@@ -107,9 +107,7 @@ function MetodePembayaran({ navigation }) {
               {
                 width: "100%",
                 minHeight: 100,
-                backgroundColor: "#C7F2A4",
-                borderBottomStartRadius: 15,
-                borderBottomEndRadius: 15,
+                backgroundColor: "green",
               },
               styles.colCenter,
             ]}

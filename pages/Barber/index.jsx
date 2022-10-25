@@ -18,14 +18,14 @@ import {
 } from "react-native";
 import DateTime from "@react-native-community/datetimepicker";
 import MapView from "react-native-maps";
-import { Ionicons, Feather, Fontisto } from "@expo/vector-icons";
+import { Ionicons, Feather, Fontisto ,MaterialIcons } from "@expo/vector-icons";
 import CardLayanan from "../../component/CardLayanan";
 import * as Location from "expo-location";
 import { Link } from "@react-navigation/native";
-import { getBarber, me } from "../../utils/redux/actions";
+import { getBarber, me, riwayat } from "../../utils/redux/actions";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { base_url } from "../../utils/helper";
+import { base_url, getStatus, getStatusColor } from "../../utils/helper";
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 
@@ -35,6 +35,7 @@ function Barber({ navigation }) {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.mainReducer.user);
+  const profile = useSelector(state => state.mainReducer.profile)
   const [isTanggal, setTgl] = useState(false);
   const [isJam, setJm] = useState(false);
   const [location, setLocation] = useState(null);
@@ -60,8 +61,9 @@ function Barber({ navigation }) {
   };
 
   useEffect(() => {
-    dispatch(getBarber()).then((res) => {
-      setData(res.data.data);
+    dispatch(riwayat(profile.id)).then((res) => {
+      // alert(JSON.stringify(res.data))
+      setData(res.data);
     });
   }, []);
 
@@ -103,9 +105,7 @@ function Barber({ navigation }) {
               {
                 width: "100%",
                 minHeight: 100,
-                backgroundColor: "pink",
-                borderBottomStartRadius: 15,
-                borderBottomEndRadius: 15,
+                backgroundColor: "green",
               },
               styles.colCenter,
             ]}
@@ -124,7 +124,7 @@ function Barber({ navigation }) {
               <Pressable onPress={() => navigation.navigate("Dashboard")}>
                 <Ionicons name="arrow-back" size={30} color="black" />
               </Pressable>
-              <Text style={[styles.heading, { color: "white" }]}>Barber</Text>
+              <Text style={[styles.heading, { color: "white" }]}>Transaksi Saya</Text>
             </View>
           </View>
           <View
@@ -166,19 +166,13 @@ function Barber({ navigation }) {
                           style={{
                             height: 70,
                             width: 70,
-                            backgroundColor: "#6fffa9",
+                            backgroundColor: getStatusColor(parseInt(e.status)),
                             justifyContent: "center",
                             borderRadius: 10,
                             alignItems: "center",
                           }}
                         >
-                          <Image
-                            style={{ width: 70, height: 70, borderRadius: 10 }}
-                            source={{
-                              uri:
-                                base_url+ "/images/" + e.profile,
-                            }}
-                          />
+                          <MaterialIcons name="home-repair-service" size={32} color="white" />
                         </View>
                         <View
                           style={[
@@ -186,17 +180,20 @@ function Barber({ navigation }) {
                             { marginLeft: 10, maxWidth: "60%" },
                           ]}
                         >
-                          <Text style={[styles.heading, { fontSize: 18 }]}>
-                            {e.nama_barber}
+                          <Text style={[styles.heading, { fontSize: 14 }]}>
+                            {e.pengguna.nama}
                           </Text>
                           <Text style={[styles.heading, { fontSize: 14 }]}>
-                            {e.nama}
+                            ({e.servis.nama_servis})
+                          </Text>
+                          <Text style={[styles.heading, { fontSize: 8, color: getStatusColor(parseInt(e.status)) }]}>
+                            {getStatus(parseInt(e.status)) }
                           </Text>
                         </View>
                       </View>
                       <TouchableOpacity
                         onPress={() =>
-                          navigation.navigate("Home", {
+                          navigation.navigate("Detail", {
                             id: e.id,
                           })
                         }

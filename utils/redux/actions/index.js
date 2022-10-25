@@ -29,6 +29,32 @@ export const login = (data) => (dispatch) => {
       });
   });
 };
+
+export const ubahProfile = (id,data) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(base_url + "/ubahProfile/" + id, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(async (res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        alert(JSON.stringify(err))
+        reject(err);
+      });
+  });
+};
+
+export const logout = (data) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    Storage.removeItem({ key: 'user' })
+    dispatch({ type: "SET_LOGIN", payload: false });
+    resolve(res);
+  });
+};
 export const register = (data) => (dispatch) => {
   return new Promise((resolve, reject) => {
     axios
@@ -187,3 +213,94 @@ export const deleteMetodePembayaran = (id) => (dispatch) => {
   });
 };
 
+export const getTransaksi = (id) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(base_url + "/transaksi/" + id)
+      .then((res) => {
+        console.log(res);
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+export const riwayat = (id) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(base_url + "/transaksi-riwayat-barber/" + id)
+      .then((res) => {
+        console.log(res);
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
+
+export const verifikasi = (id, data) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(base_url + "/verifikasi/" + id, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
+
+export const getKatalogId = (id) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(base_url + "/katalog/" + id)
+      .then((res) => {
+        console.log(res);
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+
+export const tambahKatalog = (data) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(base_url + "/katalog", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        resolve(res);
+      })
+      .catch((err) => {
+        alert(JSON.stringify(err.response));
+        reject(err);
+      });
+  });
+};
+
+export const deleteKatalog = (id) => (dispatch) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(base_url + "/katalog/" + id + "/delete")
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};

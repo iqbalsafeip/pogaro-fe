@@ -113,8 +113,6 @@ const Register = ({ navigation }) => {
   return (
     <AuthLayout
       navigation={navigation}
-      title="Getting Started"
-      subTitle="Create an account to continue"
     >
       <View>
         <FormInput
@@ -144,8 +142,8 @@ const Register = ({ navigation }) => {
           onBlur={() => onBlur("nama_barber", false)}
           errorMessage={names.length > 0 ? names : ""}
           icon={names.length > 0 ? CrossIcon : CorrectIcon}
-          label="Nama Barber"
-          placeholder="Nama Barber"
+          label="Nama Fotografer"
+          placeholder="Nama Fotografer"
         ></FormInput>
         <FormInput
           value={input.password}

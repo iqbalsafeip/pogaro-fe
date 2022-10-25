@@ -97,7 +97,6 @@ function Dashboard({ navigation }) {
           style={{
             backgroundColor: "white",
             width: width,
-            minHeight: height,
           }}
         >
           <View
@@ -105,9 +104,7 @@ function Dashboard({ navigation }) {
               {
                 width: "100%",
                 minHeight: 100,
-                backgroundColor: "#E1FFB1",
-                borderBottomStartRadius: 15,
-                borderBottomEndRadius: 15,
+                backgroundColor: "green",
                 marginBottom: 10
               },
               styles.colCenter,
@@ -125,8 +122,21 @@ function Dashboard({ navigation }) {
                 },
               ]}
             >
-              <Text style={[styles.heading, { color: "black" }]}>BARON</Text>
-              <Ionicons name="person-circle" size={32} color="black" />
+              <Text style={[styles.heading, { color: "white" }]}>POGARO</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Profile")}
+                style={[
+                  styles.rowCenter,
+                  {
+                    height: 50,
+                    width: 50,
+                    backgroundColor: "white",
+                    borderRadius: 25,
+                  },
+                ]}
+              >
+                <Ionicons name="person-circle" size={32} color="black" />
+              </TouchableOpacity>
             </View>
           </View>
           <View
@@ -147,7 +157,7 @@ function Dashboard({ navigation }) {
             >
               <Text style={{ color: "black" }}>Halo, Selamat Datang</Text>
               <Text style={[styles.heading, { color: "black" }]}>
-                {user?.name}
+                {profile?.nama}
               </Text>
               <Text style={[styles.heading, { color: "gray", fontSize: 14 }]}>
                 {profile?.nama_barber}
@@ -278,6 +288,75 @@ function Dashboard({ navigation }) {
                   </View>
                   <TouchableOpacity
                     onPress={() => navigation.navigate("Servis")}
+                    style={[
+                      styles.rowCenter,
+                      {
+                        height: 70,
+                        width: 70,
+                        backgroundColor: "#6fffa9",
+                        borderRadius: 10,
+                      },
+                    ]}
+                  >
+                    <Feather name="arrow-right" size={50} color="white" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View
+                style={[
+                  {
+                    width: "100%",
+                    borderRadius: 20,
+                    height: 100,
+                    backgroundColor: "white",
+                    marginTop: 15,
+                  },
+                  styles.shadow,
+                ]}
+              >
+                <View
+                  style={[
+                    {
+                      height: "100%",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: 15,
+                    },
+                  ]}
+                >
+                  <View
+                    style={{
+                      height: "100%",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        height: 70,
+                        width: 70,
+                        backgroundColor: "#6fffa9",
+                        justifyContent: "center",
+                        borderRadius: 10,
+                        alignItems: "center",
+                      }}
+                    >
+                      <Fontisto name="camera" size={28} color="white" />
+                    </View>
+                    <View
+                      style={[
+                        styles.colCenter,
+                        { marginLeft: 10, maxWidth: "60%" },
+                      ]}
+                    >
+                      <Text style={[styles.heading, { fontSize: 18 }]}>
+                        Lihat Katalog
+                      </Text>
+                    </View>
+                  </View>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("Katalog")}
                     style={[
                       styles.rowCenter,
                       {
